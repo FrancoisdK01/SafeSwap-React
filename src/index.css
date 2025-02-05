@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Mobile-first responsive design */
+@media (max-width: 640px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Prevent content from being hidden under bottom navigation */
+main {
+  padding-bottom: 5rem;
+}
+
+/* Ensure forms and inputs are mobile-friendly */
+input, 
+select, 
+textarea {
+  font-size: 16px !important; /* Prevents zoom on mobile */
+}
+
+/* Improve touch targets on mobile */
+button,
+[role="button"] {
+  min-height: 44px;
+  min-width: 44px;
+}

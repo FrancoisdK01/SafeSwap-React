@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SafeSwap Payment Request</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f5f5f5;">
+  <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
+    <!-- Header -->
+    <div style="background-color: #4299e1; padding: 20px; text-align: center;">
+      <h1 style="color: white; margin: 0;">SafeSwap Payment Request</h1>
+    </div>
+
+    <!-- Content -->
+    <div style="padding: 30px; background-color: #ffffff;">
+      <p>Hello,</p>
+      <p>You have received a payment request for the following transaction:</p>
+
+      <!-- Transaction Details -->
+      <div style="background-color: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
+        <p style="margin: 8px 0;"><strong>SafeCode:</strong> {{safe_code}}</p>
+        <p style="margin: 8px 0;"><strong>Item:</strong> {{item_name}}</p>
+        <p style="margin: 8px 0;"><strong>Amount:</strong> {{amount}}</p>
+      </div>
+
+      <!-- Payment Button -->
+      <div style="text-align: center; margin: 30px 0;">
+        <a href="{{payment_url}}" 
+           style="background-color: #4299e1; color: white; padding: 12px 24px; 
+                  text-decoration: none; border-radius: 6px; font-weight: bold;">
+          Pay Now
+        </a>
+      </div>
+
+      <p style="color: #64748b; font-size: 14px;">
+        This payment link will expire in 24 hours. If you have any questions, 
+        please contact support.
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <div style="text-align: center; padding: 20px; background-color: #f8fafc; color: #64748b;">
+      <p style="font-size: 12px; margin: 0;">
+        © {{year}} SafeSwap. All rights reserved.
+      </p>
+    </div>
+  </div>
+</body>
+</html>
