@@ -1,19 +1,18 @@
 import emailjs from '@emailjs/browser';
 import { Transaction } from '../types/transaction';
 import { createPaymentUrl } from '../utils/payment/createPaymentForm';
-import {PAYFAST_CONFIG } from '../utils/payment/payfast';
+import { PAYFAST_CONFIG } from '../utils/payment/payfast';
 import { EMAILJS_CONFIG } from '../config/emailjs';
 
 export async function sendPaymentLink(transaction: Transaction, email: string) {
-  // Use the dynamic base URL based on is_sandbox
-  const paymentUrl = createPaymentUrl({
-    ...PAYFAST_CONFIG,
-  }, transaction, email);
-
-  console.log(paymentUrl);
-  
-
   try {
+    // Use the dynamic base URL based on is_sandbox
+    const paymentUrl = createPaymentUrl({
+      ...PAYFAST_CONFIG,
+    }, transaction, email);
+
+    console.log(paymentUrl);
+
     const response = await emailjs.send(
       EMAILJS_CONFIG.serviceId,
       EMAILJS_CONFIG.templateId,
@@ -34,7 +33,17 @@ export async function sendPaymentLink(transaction: Transaction, email: string) {
       response,
     };
   } catch (error) {
-    console.error('Failed to send email:', error);
-    throw error;
+    console.error('Failed to send payment link email:', error);
+    if (error instanceof Error) {
+      console.error('Error message:', error.message);
+    } else {
+      console.error('Unknown error');
+    }
+    return {
+      success: false,
+      message: 'Failed to send payment link email.',
+      error: error instanceof Error ? error.message : 'Unknown error',
+    };
   }
+  
 }

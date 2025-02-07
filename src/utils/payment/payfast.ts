@@ -15,14 +15,14 @@ export interface PayFastConfig {
 }
 
 export const PAYFAST_CONFIG: PayFastConfig = {
-  merchant_id: '26678331',
-  merchant_key: '2q9euemdyiyu9',
+  merchant_id: '10036981',
+  merchant_key: 'wnhgjl9qn8d5i',
   passphrase: 'SafeSwapSaltPhrase102',
   production_url: 'https://www.payfast.co.za/eng/process',
   sandbox_url: 'https://sandbox.payfast.co.za/eng/process',
   return_url: `https://celebrated-pixie-6a4543.netlify.app/payment/success`,
   cancel_url: `https://celebrated-pixie-6a4543.netlify.app/payment/cancel`,
   notify_url: `https://celebrated-pixie-6a4543.netlify.app/payment/notify`,
-  is_sandbox: false, // Set this flag to determine sandbox or production mode
+  is_sandbox: true, // Set this flag to determine sandbox or production mode
 };
 
