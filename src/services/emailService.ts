@@ -1,18 +1,17 @@
 import emailjs from '@emailjs/browser';
 import { Transaction } from '../types/transaction';
-import { createPaymentForm } from '../utils/payment/createPaymentForm';
-import { PAYFAST_CONFIG } from '../utils/payment/payfast';
+import { createPaymentUrl } from '../utils/payment/createPaymentForm';
+import {PAYFAST_CONFIG } from '../utils/payment/payfast';
 import { EMAILJS_CONFIG } from '../config/emailjs';
 
 export async function sendPaymentLink(transaction: Transaction, email: string) {
-  const { formUrl, formData } = createPaymentForm(PAYFAST_CONFIG, transaction, email);
-  const searchParams = new URLSearchParams();
-  Object.entries(formData).forEach(([key, value]) => {
-    if (value !== undefined) {
-      searchParams.append(key, value);
-    }
-  });
-  const paymentUrl = `${formUrl}?${searchParams.toString()}`;
+  // Use the dynamic base URL based on is_sandbox
+  const paymentUrl = createPaymentUrl({
+    ...PAYFAST_CONFIG,
+  }, transaction, email);
+
+  console.log(paymentUrl);
+  
 
   try {
     const response = await emailjs.send(
