@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { sendPaymentEmail } from './emailService';
+import { sendPaymentEmail } from '../templates/emailService';
 import { createPaymentForm } from '../utils/payment/createPaymentForm';
 import { PAYFAST_CONFIG } from '../utils/payment/payfast';
 
