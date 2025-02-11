@@ -9,7 +9,7 @@ import { Transaction } from '../types/transaction';
 export default function Payment() {
   const { referenceId } = useParams();
   const { findTransactionBySafeCode } = useTransactions();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [transaction, setTransaction] = useState<Transaction | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

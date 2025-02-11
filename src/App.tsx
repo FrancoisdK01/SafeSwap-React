@@ -15,6 +15,7 @@ import Returns from './pages/Returns';
 import Profile from './pages/Profile';
 import Auth from './pages/Auth';
 import PrivateRoute from './components/PrivateRoute';
+import PaymentSuccess from './pages/PaymentSuccess';
 
 export default function App() {
   return (
@@ -38,6 +39,8 @@ export default function App() {
                   <Route path="tasks" element={<Tasks />} />
                   <Route path="returns" element={<Returns />} />
                   <Route path="profile" element={<Profile />} />
+                  <Route path="payment/success" element={<PaymentSuccess />} />
+
                 </Route>
               </Routes>
             </Router>
