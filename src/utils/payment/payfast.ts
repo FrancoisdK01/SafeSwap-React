@@ -1,5 +1,5 @@
 
-// This is the Payfast Configuration interface object structure
+// This is the currently used Payfast Configuration interface object structure
 // Used by emailservice.ts to generate the payment link sent via the EmailJS client 
 
 export interface PayFastConfig {
@@ -22,7 +22,7 @@ export const PAYFAST_CONFIG: PayFastConfig = {
   sandbox_url: 'https://sandbox.payfast.co.za/eng/process',
   return_url: `https://celebrated-pixie-6a4543.netlify.app/payment/success`,
   cancel_url: `https://celebrated-pixie-6a4543.netlify.app/payment/cancel`,
-  notify_url: `https://celebrated-pixie-6a4543.netlify.app/payment/notify`,
-  is_sandbox: true, // Set this flag to determine sandbox or production mode
+  notify_url: `https://celebrated-pixie-6a4543.netlify.app/.netlify/functions/paymentNotify`,  // Netlify function endpoint
+  is_sandbox: true,
 };
 
