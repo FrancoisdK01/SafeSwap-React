@@ -5,3 +5,7 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+[build]
+command = "npm run build"
+publish = "dist"  # Adjust based on your framework (e.g., "out" for Next.js, "build" for React)
