@@ -58,8 +58,10 @@ export function createPaymentUrl(
   // Step 2: Generate the MD5 signature
   const signature = md5(signatureString);
 
-  console.log('Signature String:', signatureString);
-  console.log('Generated Signature:', signature);
+  //Log the signature and generated string for debugging.
+
+  // console.log('Signature String:', signatureString);
+  // console.log('Generated Signature:', signature);
 
   // Step 3: Encode all parameters for the final URL
   const encodedParams = fieldOrder

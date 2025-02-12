@@ -11,7 +11,7 @@ export async function sendPaymentLink(transaction: Transaction, email: string) {
       ...PAYFAST_CONFIG,
     }, transaction, email);
 
-    console.log(paymentUrl);
+    // console.log(paymentUrl);
 
     const response = await emailjs.send(
       EMAILJS_CONFIG.serviceId,
