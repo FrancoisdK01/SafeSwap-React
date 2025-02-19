@@ -1,4 +1,3 @@
-
 // This is the currently used Payfast Configuration interface object structure
 // Used by emailservice.ts to generate the payment link sent via the EmailJS client 
 
@@ -12,7 +11,12 @@ export interface PayFastConfig {
   cancel_url: string;
   notify_url: string;
   is_sandbox: boolean;
+  is_local: boolean; // ✅ NEW: Toggle between local and public environments
 }
+
+// Base URLs
+const LOCAL_BASE_URL = 'http://localhost:5173'; // ✅ Updated to use the correct Vite port
+const PUBLIC_BASE_URL = 'https://celebrated-pixie-6a4543.netlify.app';
 
 export const PAYFAST_CONFIG: PayFastConfig = {
   merchant_id: '10036981',
@@ -20,9 +24,9 @@ export const PAYFAST_CONFIG: PayFastConfig = {
   passphrase: 'SafeSwapSaltPhrase102',
   production_url: 'https://www.payfast.co.za/eng/process',
   sandbox_url: 'https://sandbox.payfast.co.za/eng/process',
-  return_url: `https://celebrated-pixie-6a4543.netlify.app/payment/success`,
-  cancel_url: `https://celebrated-pixie-6a4543.netlify.app/payment/cancel`,
-  notify_url: `https://celebrated-pixie-6a4543.netlify.app/.netlify/functions/paymentNotify`,  // Netlify function endpoint
+  return_url: `${import.meta.env.VITE_IS_LOCAL === 'true' ? LOCAL_BASE_URL : PUBLIC_BASE_URL}/payment/success`,
+  cancel_url: `${import.meta.env.VITE_IS_LOCAL === 'true' ? LOCAL_BASE_URL : PUBLIC_BASE_URL}/payment/cancel`,
+  notify_url: `${import.meta.env.VITE_IS_LOCAL === 'true' ? LOCAL_BASE_URL : PUBLIC_BASE_URL}/.netlify/functions/paymentNotify`,
   is_sandbox: true,
+  is_local: import.meta.env.VITE_IS_LOCAL === 'false', // ✅ Reads from VITE prefixed variable in .env
 };
-
