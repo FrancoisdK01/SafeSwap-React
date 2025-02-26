@@ -1,6 +1,6 @@
 import { createHash } from 'crypto';
 import { supabase } from './supabaseClient'; // ✅ Import the shared Supabase client for database operations
-import axios from 'axios'; // ✅ For server confirmation requests to PayFast
+const axios = require('axios'); // ✅ For server confirmation requests to PayFast
 import dns from 'dns'; // ✅ To validate PayFast IP addresses
 
 /**
