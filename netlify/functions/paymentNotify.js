@@ -2,6 +2,7 @@ import { createHash } from 'crypto';
 import { supabase } from './supabaseClient'; // ✅ Import the shared Supabase client for database operations
 const axios = require('axios'); // ✅ For server confirmation requests to PayFast
 import dns from 'dns'; // ✅ To validate PayFast IP addresses
+import qs from 'querystring'; // ✅ Import this at the top
 
 /**
  * ✅ Main handler function triggered by Netlify when a POST request is received at the notify endpoint.
@@ -140,7 +141,11 @@ async function validatePayfastIP(req) {
  */
 async function validateServerConfirmation(pfParamString) {
   const pfHost = process.env.NODE_ENV === 'production' ? 'www.payfast.co.za' : 'sandbox.payfast.co.za';
-  const response = await axios.post(`https://${pfHost}/eng/query/validate`, pfParamString);
+  const response = await axios.post(
+    `https://${pfHost}/eng/query/validate`,
+    qs.stringify({ pfParamString }), // ✅ Ensure URL encoding
+    { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
+  );
   console.log(`🔗 Server Confirmation Response: ${response.data}`);
-  return response.data === 'VALID'; // ✅ Return true if PayFast confirms transaction validity
+  return response.data === 'VALID';
 }
