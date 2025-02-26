@@ -1,0 +1,12 @@
+Go Live => Set Netlify Variable
+
+NODE_ENV = production 
+
+? What will this do ?
+
+paymentNotify.Js
+
+line 129  
+
+const pfHost = process.env.NODE_ENV === 'production' ? 'www.payfast.co.za' : 'sandbox.payfast.co.za';
+

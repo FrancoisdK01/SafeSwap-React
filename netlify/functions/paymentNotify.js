@@ -104,6 +104,7 @@ async function validatePayfastIP(req) {
     'w1w.payfast.co.za',
     'w2w.payfast.co.za'
   ];
+  
   let validIps = [];
   const pfIp = (req.headers['x-forwarded-for'] || req.connection.remoteAddress).split(',')[0].trim(); // ✅ Handles multiple IPs
 
