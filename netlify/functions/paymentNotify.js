@@ -2,7 +2,6 @@ import { createHash } from 'crypto';
 import { supabase } from './supabaseClient'; // ✅ Shared Supabase client
 const axios = require('axios'); // ✅ For server confirmation requests to PayFast
 import dns from 'dns'; // ✅ To validate PayFast IP addresses
-import qs from 'querystring'; // ✅ For consistent URL encoding
 
 /**
  * ✅ Main handler function triggered by Netlify when a POST request is received at the notify endpoint.
@@ -18,8 +17,13 @@ export async function handler(event) {
     }
     // ✅ Immediate 200 response as per PayFast docs
     console.log('📡 Proceeding with validation checks...');
-    const payload = new URLSearchParams(event.body);
-    const requiredFields = ['pf_payment_id', 'payment_status', 'item_name', 'merchant_id'];
+
+    const payload = event.headers['content-type'] === 'application/json'
+      ? JSON.parse(event.body)
+      : new URLSearchParams(event.body);
+
+    const requiredFields = ['pf_payment_id', 'm_payment_id', 'payment_status', 'item_name', 'merchant_id'];
+
     for (const field of requiredFields) {
       if (!payload.get(field)) {
         console.error(`❌ Missing required field: ${field}`);
@@ -61,7 +65,12 @@ export async function handler(event) {
     }
 
     console.log(`🎉 Payment for ${m_payment_id} successfully updated.`);
-    return { statusCode: 200, body: JSON.stringify({ message: 'Payment updated successfully', data }) };
+    return {
+      statusCode: 200,
+      headers: { 'Access-Control-Allow-Origin': '*' }, //✅ Explicitly allowing CORS in response
+      body: JSON.stringify({ message: 'Payment updated successfully', data }),
+    };
+
   } catch (err) {
     console.error(`🛑 General Server Error: ${err.message}`);
     return { statusCode: 500, body: `General server error: ${err.message}` };
@@ -104,7 +113,7 @@ async function validatePayfastIP(req) {
     'w1w.payfast.co.za',
     'w2w.payfast.co.za'
   ];
-  
+
   let validIps = [];
   const pfIp = (req.headers['x-forwarded-for'] || req.connection.remoteAddress).split(',')[0].trim(); // ✅ Handles multiple IPs
 
@@ -129,9 +138,10 @@ async function validateServerConfirmation(pfParamString) {
   const pfHost = process.env.NODE_ENV === 'production' ? 'www.payfast.co.za' : 'sandbox.payfast.co.za';
   const response = await axios.post(
     `https://${pfHost}/eng/query/validate`,
-    qs.stringify({ pfParamString }), // ✅ Consistent URL encoding
+    pfParamString, // ✅ Send as string
     { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
   );
+  
   console.log(`🔗 Server Confirmation Response: ${response.data}`);
   return response.data === 'VALID';
 }
