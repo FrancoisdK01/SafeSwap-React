@@ -89,13 +89,43 @@ export async function handler(event) {
 
 
     // ✅ All validations passed, update transaction status in Supabase
-    const { data, error } = await supabase.rpc('update_transaction_paid', { transaction_id: m_payment_id });
+    // Update both transactions and buyer_transactions in Supabase
+    const { data: transactionData, error: transactionError } = await supabase
+      .from('transactions')
+      .update({ status: 'paid' })
+      .eq('id', m_payment_id)
+      .select();  // Retrieve updated rows
 
-    if (error) {
-      console.error('❌ Error updating transactions:', error);
+    const { data: buyerTransactionData, error: buyerTransactionError } = await supabase
+      .from('buyer_transactions')
+      .update({ status: 'paid' })
+      .eq('original_transaction_id', m_payment_id)
+      .select();  // Retrieve updated rows
+
+    // Log and handle errors
+    if (transactionError) {
+      console.error('❌ Error updating transactions:', transactionError);
     } else {
-      console.log('✅ Transactions updated successfully.');
-    }    
+      console.log('✅ Transactions updated:', transactionData);
+    }
+
+    if (buyerTransactionError) {
+      console.error('❌ Error updating buyer_transactions:', buyerTransactionError);
+    } else {
+      console.log('✅ Buyer transactions updated:', buyerTransactionData);
+    }
+
+    // Return both results
+    return {
+      statusCode: 200,
+      headers: { 'Access-Control-Allow-Origin': '*' },
+      body: JSON.stringify({
+        message: 'Payment updated successfully',
+        transactions: transactionData,
+        buyer_transactions: buyerTransactionData
+      }),
+    };
+
 
 
 
