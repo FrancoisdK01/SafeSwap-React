@@ -2,6 +2,8 @@ import { createHash } from 'crypto';
 import { supabase } from './supabaseClient'; // ✅ Shared Supabase client
 const axios = require('axios'); // ✅ For server confirmation requests to PayFast
 import dns from 'dns'; // ✅ To validate PayFast IP addresses
+import { updateTransactionStatus } from '../../contexts/TransactionContext';
+
 
 /**
  * ✅ Main handler function triggered by Netlify when a POST request is received at the notify endpoint.
@@ -88,32 +90,30 @@ export async function handler(event) {
     }
 
 
-    // ✅ All validations passed, update transaction status in Supabase
-    // Update both transactions and buyer_transactions in Supabase
-    const { data: transactionData, error: transactionError } = await supabase
-      .from('transactions')
-      .update({ status: 'paid' })
-      .eq('id', m_payment_id)
-      .select();  // Retrieve updated rows
-
-    const { data: buyerTransactionData, error: buyerTransactionError } = await supabase
-      .from('buyer_transactions')
-      .update({ status: 'paid' })
-      .eq('original_transaction_id', m_payment_id)
-      .select();  // Retrieve updated rows
-
-    // Log and handle errors
-    if (transactionError) {
-      console.error('❌ Error updating transactions:', transactionError);
-    } else {
-      console.log('✅ Transactions updated:', transactionData);
+    async function handlePaymentNotification(m_payment_id) {
+      console.log("🔔 Received Payment Notification for:", m_payment_id);
+    
+      // Update transaction status using the same logic as your frontend
+      const updatedTransaction = await updateTransactionStatus(m_payment_id, 'paid');
+    
+      if (!updatedTransaction || updatedTransaction.length === 0) {
+        console.error('❌ No transactions updated. Check if transaction ID is correct.');
+      } else {
+        console.log('✅ Successfully updated transaction via Payment Notification.');
+      }
     }
-
-    if (buyerTransactionError) {
-      console.error('❌ Error updating buyer_transactions:', buyerTransactionError);
-    } else {
-      console.log('✅ Buyer transactions updated:', buyerTransactionData);
-    }
+    
+    // ✅ Call the function before returning the response
+    await handlePaymentNotification(m_payment_id);
+    
+    return {
+      statusCode: 200,
+      headers: { 'Access-Control-Allow-Origin': '*' },
+      body: JSON.stringify({
+        message: 'Payment updated successfully',
+      }),
+    };
+    
 
     // Return both results
     return {
