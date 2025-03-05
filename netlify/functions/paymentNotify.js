@@ -2,7 +2,7 @@ import { createHash } from 'crypto';
 import { supabase } from './supabaseClient'; // ✅ Shared Supabase client
 const axios = require('axios'); // ✅ For server confirmation requests to PayFast
 import dns from 'dns'; // ✅ To validate PayFast IP addresses
-import { updateTransactionStatus } from '../../contexts/TransactionContext';
+import { updateTransactionStatus } from './updateTransaction';
 
 
 /**
