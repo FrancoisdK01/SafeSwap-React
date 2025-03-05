@@ -39,8 +39,8 @@ export async function handler(event) {
 
     // ✅ Perform PayFast security validations
     const check1 = validateSignature(payload, pfParamString, process.env.PAYFAST_PASSPHRASE);
-    const check2 = await validatePayfastIP(event);
-    const check3 = await validateServerConfirmation(pfParamString);
+    // const check2 = await validatePayfastIP(event);
+    // const check3 = await validateServerConfirmation(pfParamString);
 
     if (!(check1)) { //only check 1 && check2 && check3
       console.error('❌ One or more validation checks failed.');
@@ -91,17 +91,23 @@ function buildParamString(params) {
 }
 
 /**
- * ✅ Validates the signature received from PayFast.
+ * ✅ Validates the signature received from PayFast. v2
  */
 function validateSignature(pfData, pfParamString, passphrase) {
-  if (passphrase) {
-    pfParamString += `&passphrase=${encodeURIComponent(passphrase.trim()).replace(/%20/g, '+')}`;
+  let tempParamString = pfParamString; // Keep original param string
+
+  if (passphrase !== null && passphrase !== undefined) {
+    tempParamString += `&passphrase=${encodeURIComponent(passphrase.trim()).replace(/%20/g, "+")}`;
   }
-  const calculatedSignature = createHash('md5').update(pfParamString).digest('hex');
+
+  const calculatedSignature = createHash('md5').update(tempParamString).digest('hex');
+  
   console.log(`✅ Calculated Signature: ${calculatedSignature}`);
-  console.log(`🛬 Received Signature: ${pfData.get('signature')}`);
-  return pfData.get('signature') === calculatedSignature;
+  console.log(`🛬 Received Signature: ${pfData.get('signature') || pfData['signature']}`); // Handle both object and URLSearchParams
+
+  return (pfData['signature']) === calculatedSignature; //OLD : pfData.get('signature') || ...
 }
+
 
 /**
  * ✅ Validates that the incoming request originates from a known PayFast IP address.
