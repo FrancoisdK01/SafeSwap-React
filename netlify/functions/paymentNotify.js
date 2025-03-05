@@ -113,28 +113,6 @@ export async function handler(event) {
         message: 'Payment updated successfully',
       }),
     };
-    
-
-    // Return both results
-    return {
-      statusCode: 200,
-      headers: { 'Access-Control-Allow-Origin': '*' },
-      body: JSON.stringify({
-        message: 'Payment updated successfully',
-        transactions: transactionData,
-        buyer_transactions: buyerTransactionData
-      }),
-    };
-
-
-
-
-    console.log(`🎉 Payment for ${m_payment_id} successfully updated.`);
-    return {
-      statusCode: 200,
-      headers: { 'Access-Control-Allow-Origin': '*' }, //✅ Explicitly allowing CORS in response
-      body: JSON.stringify({ message: 'Payment updated successfully', data }),
-    };
 
   } catch (err) {
     console.error(`🛑 General Server Error: ${err.message}`);
