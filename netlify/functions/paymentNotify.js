@@ -89,7 +89,7 @@ export async function handler(event) {
 
 
     // ✅ All validations passed, update transaction status in Supabase
-    const { data, error } = await supabase.rpc('Update_Transaction_Paid', { transaction_id: m_payment_id });
+    const { data, error } = await supabase.rpc('update_transaction_paid', { transaction_id: m_payment_id });
 
     if (error) {
       console.error('❌ Error updating transactions:', error);
