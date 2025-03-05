@@ -50,13 +50,13 @@ export default function PendingPaymentList() {
                 transaction={item.transaction}
                 onSuccess={() => setSelectedItem(null)}
               />
-              <button
+              {/* <button
                 onClick={() => handlePaymentSuccess(item.transaction.id)}
                 className="w-full bg-green-500 text-white py-2 px-4 rounded-lg 
                   hover:bg-green-600 transition-colors text-sm font-medium"
               >
                 Simulate Payment Success
-              </button>
+              </button> */}
             </div>
           ) : (
             <button
