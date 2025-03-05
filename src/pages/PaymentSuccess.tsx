@@ -11,19 +11,19 @@ const PaymentSuccess = () => {
   const { updateTransactionStatus } = useTransactions();
 
   // Extract query parameters
-  const status = searchParams.get("status");
-  const transactionId = searchParams.get("transaction_id");
+  const mPaymentId = searchParams.get("m_payment_id");
+  const paymentStatus = searchParams.get("payment_status"); // e.g. "COMPLETE"
 
   useEffect(() => {
-    if (status === "success" && transactionId) {
-      updateTransactionStatus(transactionId, "paid");
+    if (paymentStatus === "COMPLETE" && mPaymentId) {
+      updateTransactionStatus(mPaymentId, "paid");
 
       // Redirect after 3 seconds
       setTimeout(() => {
         navigate("/transactions");
       }, 3000);
     }
-  }, [status, transactionId, updateTransactionStatus, navigate]);
+  }, [status, mPaymentId, updateTransactionStatus, navigate]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
@@ -40,7 +40,7 @@ const PaymentSuccess = () => {
             <p className="text-gray-600 mt-2">Your payment was processed successfully.</p>
             <div className="bg-gray-50 p-4 rounded-lg mt-4">
               <p className="text-gray-700">
-                <strong>Transaction ID:</strong> {transactionId}
+                <strong>Transaction ID:</strong> {mPaymentId}
               </p>
             </div>
           </>
