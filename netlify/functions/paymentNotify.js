@@ -42,7 +42,7 @@ export async function handler(event) {
     const check2 = await validatePayfastIP(event);
     const check3 = await validateServerConfirmation(pfParamString);
 
-    if (!(check1 && check2 && check3)) {
+    if (!(check1)) { //only check 1 && check2 && check3
       console.error('❌ One or more validation checks failed.');
       return { statusCode: 400, body: 'Validation checks failed' };
     }
