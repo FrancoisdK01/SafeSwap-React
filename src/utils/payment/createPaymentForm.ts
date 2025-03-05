@@ -20,7 +20,7 @@ export function createPaymentUrl(
     notify_url: config.notify_url,
     name_first: userEmail.split('@')[0],  // First part of email as the first name
     email_address: userEmail,
-    m_payment_id: transaction.safe_code,  // Unique ID from transaction
+    m_payment_id: transaction.id,  // Unique ID from transaction
     amount: transaction.price.toFixed(2),
     item_name: transaction.safe_code,
     item_description: transaction.description || 'No description provided',
