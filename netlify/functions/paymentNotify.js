@@ -2,7 +2,7 @@ import { createHash } from 'crypto';
 import { supabase } from './supabaseClient'; // ✅ Shared Supabase client
 const axios = require('axios'); // ✅ For server confirmation requests to PayFast
 import dns from 'dns'; // ✅ To validate PayFast IP addresses
-import { updateTransactionStatus } from './updateTransaction';
+import { updateTransactionStatus } from './transactionService';
 
 
 /**
@@ -89,36 +89,21 @@ export async function handler(event) {
       return { statusCode: 400, body: 'Payment not completed' };
     }
 
+    // ✅ Use transactionService.ts to update transaction status
+    await updateTransactionStatus(m_payment_id, 'paid');
+    console.log('✅ Successfully updated transaction via Payment Notification.');
 
-    async function handlePaymentNotification(m_payment_id) {
-      console.log("🔔 Received Payment Notification for:", m_payment_id);
-    
-      // Update transaction status using the same logic as your frontend
-      const updatedTransaction = await updateTransactionStatus(m_payment_id, 'paid');
-    
-      if (!updatedTransaction || updatedTransaction.length === 0) {
-        console.error('❌ No transactions updated. Check if transaction ID is correct.');
-      } else {
-        console.log('✅ Successfully updated transaction via Payment Notification.');
-      }
-    }
-    
-    // ✅ Call the function before returning the response
-    await handlePaymentNotification(m_payment_id);
-    
     return {
       statusCode: 200,
       headers: { 'Access-Control-Allow-Origin': '*' },
-      body: JSON.stringify({
-        message: 'Payment updated successfully',
-      }),
+      body: JSON.stringify({ message: 'Payment updated successfully' }),
     };
-
   } catch (err) {
     console.error(`🛑 General Server Error: ${err.message}`);
     return { statusCode: 500, body: `General server error: ${err.message}` };
   }
 }
+
 
 /**
  * ✅ Builds the URL-encoded parameter string from the payload in the EXACT ORDER PayFast's ITN docs specify.
