@@ -41,5 +41,7 @@ export async function updateTransactionStatus(id: string, status: string): Promi
   console.log(`🔄 Rows affected in buyer_transactions:`, buyerData);
 
   console.log(`✅ Transaction ${id} successfully updated in both tables.`);
+
+  console.log(`🔍 Checking data type: ${typeof id}`);
 }
 
