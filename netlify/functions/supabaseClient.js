@@ -3,10 +3,20 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
 
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY; // Use service role key
+
+if (!supabaseUrl || !supabaseServiceKey) {
+  throw new Error('Missing Supabase environment variables. Please check your .env file.');
+}
 
 if (!supabaseUrl || !supabaseAnonKey) {
   throw new Error('Missing Supabase environment variables. Please check your .env file.');
 }
+
+// Create Supabase client with a service role key (bypasses RLS)
+export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
+  db: { schema: 'public' }
+});
 
 // Create Supabase client with retry logic and better error handling
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
