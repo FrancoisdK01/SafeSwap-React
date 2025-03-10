@@ -1,8 +1,15 @@
 import { supabase } from './supabaseClient';
-import { Transaction } from './Transaction';
 
 export async function updateTransactionStatus(id: string, status: string): Promise<void> {
+  const { data: user, error: userError } = await supabase.auth.getUser();
+  console.log('🔍 Authenticated User:', user);
+
+  if (userError || !user) {
+    console.error('❌ No authenticated user found. Updates may be blocked by RLS.');
+  }
+
   console.log(`🔄 Attempting to update transaction ${id} to status: ${status}`);
+
 
   // ✅ Update transactions table
   const { data, error: transactionError } = await supabase
@@ -42,6 +49,6 @@ export async function updateTransactionStatus(id: string, status: string): Promi
 
   console.log(`✅ Transaction ${id} successfully updated in both tables.`);
 
-  console.log(`🔍 Checking data type: ${typeof id}`);
+  console.log(`🔍 Checking data type of id: ${typeof id}`);
 }
 
