@@ -24,9 +24,9 @@ export const PAYFAST_CONFIG: PayFastConfig = {
   passphrase: 'SafeSwapSaltPhrase102',
   production_url: 'https://www.payfast.co.za/eng/process',
   sandbox_url: 'https://sandbox.payfast.co.za/eng/process',
-  return_url: `${import.meta.env.VITE_IS_LOCAL === 'true' ? LOCAL_BASE_URL : PUBLIC_BASE_URL}/payment/success`,
-  cancel_url: `${import.meta.env.VITE_IS_LOCAL === 'true' ? LOCAL_BASE_URL : PUBLIC_BASE_URL}/payment/cancel`,
-  notify_url: `${import.meta.env.VITE_IS_LOCAL === 'true' ? LOCAL_BASE_URL : PUBLIC_BASE_URL}/.netlify/functions/paymentNotify`,
+  return_url: `${import.meta.env.VITE_IS_LOCAL === 'false' ? LOCAL_BASE_URL : PUBLIC_BASE_URL}/payment/success`,
+  cancel_url: `${import.meta.env.VITE_IS_LOCAL === 'false' ? LOCAL_BASE_URL : PUBLIC_BASE_URL}/payment/cancel`,
+  notify_url: `${import.meta.env.VITE_IS_LOCAL === 'false' ? LOCAL_BASE_URL : PUBLIC_BASE_URL}/.netlify/functions/paymentNotify`,
   is_sandbox: true,
   is_local: import.meta.env.VITE_IS_LOCAL === 'false', // ✅ Reads from VITE prefixed variable in .env
 };
