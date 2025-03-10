@@ -49,6 +49,7 @@ export async function handler(event) {
 
     console.log('🔔 Received Payment Notification');
     console.log('📦 Raw Body:', event.body);
+    console.log(`🔍 Checking data type: ${typeof id}`);
 
     // ✅ Perform PayFast security validations
     //  const check1 = validateSignature(payload, pfParamString, process.env.PAYFAST_PASSPHRASE);
