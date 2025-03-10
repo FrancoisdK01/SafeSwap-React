@@ -1,6 +1,7 @@
 import { supabase } from './supabaseClient';
 
 export async function updateTransactionStatus(id: string, status: string): Promise<void> {
+  
   const { data: user, error: userError } = await supabase.auth.getUser();
   console.log('🔍 Authenticated User:', user);
 
