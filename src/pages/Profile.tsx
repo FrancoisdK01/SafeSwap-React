@@ -46,7 +46,7 @@ export default function Profile() {
 
         <VerificationSection />
 
-        <div>
+        {/* <div>
           <h2 className="font-medium mb-2">{t('profile.address')}</h2>
           <div className="relative">
             <input
@@ -57,7 +57,7 @@ export default function Profile() {
             <FaMapMarkerAlt className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
           </div>
           <p className="mt-2 text-sm text-gray-500">{t('profile.pudo')}</p>
-        </div>
+        </div> */}
       </main>
     </div>
   );
