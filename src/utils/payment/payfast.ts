@@ -18,15 +18,17 @@ export interface PayFastConfig {
 const LOCAL_BASE_URL = 'http://localhost:5173'; // ✅ Updated to use the correct Vite port
 const PUBLIC_BASE_URL = 'https://celebrated-pixie-6a4543.netlify.app';
 
+const IS_LOCAL = import.meta.env.VITE_IS_LOCAL === 'true'; // Convert string to boolean
+
 export const PAYFAST_CONFIG: PayFastConfig = {
   merchant_id: '10036981',
   merchant_key: 'wnhgjl9qn8d5i',
   passphrase: 'SafeSwapSaltPhrase102',
   production_url: 'https://www.payfast.co.za/eng/process',
   sandbox_url: 'https://sandbox.payfast.co.za/eng/process',
-  return_url: `${import.meta.env.VITE_IS_LOCAL === 'false' ? LOCAL_BASE_URL : PUBLIC_BASE_URL}/payment/success`,
-  cancel_url: `${import.meta.env.VITE_IS_LOCAL === 'false' ? LOCAL_BASE_URL : PUBLIC_BASE_URL}/payment/cancel`,
-  notify_url: `${import.meta.env.VITE_IS_LOCAL === 'false' ? LOCAL_BASE_URL : PUBLIC_BASE_URL}/.netlify/functions/paymentNotify`,
+  return_url: `${IS_LOCAL ? LOCAL_BASE_URL : PUBLIC_BASE_URL}/payment/success`,
+  cancel_url: `${IS_LOCAL ? LOCAL_BASE_URL : PUBLIC_BASE_URL}/payment/cancel`,
+  notify_url: `${IS_LOCAL ? LOCAL_BASE_URL : PUBLIC_BASE_URL}/.netlify/functions/paymentNotify`,
   is_sandbox: true,
-  is_local: import.meta.env.VITE_IS_LOCAL === 'false', // ✅ Reads from VITE prefixed variable in .env
+  is_local: IS_LOCAL, // ✅ Now correctly evaluates as boolean
 };
