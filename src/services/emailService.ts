@@ -6,6 +6,15 @@ import { EMAILJS_CONFIG } from '../config/emailjs';
 
 export async function sendPaymentLink(transaction: Transaction, email: string) {
   try {
+    // Log the payment details regardless of whether email is sent
+    const paymentUrl = createPaymentUrl({
+      ...PAYFAST_CONFIG,
+    }, transaction, email);
+
+    console.log('Payment URL:', paymentUrl);
+    console.log('Transaction Details:', transaction);
+    console.log('Sending payment link to email:', email);
+
     // Check if sending emails is disabled
     if (!EMAILJS_CONFIG.SendMail) {
       return {
@@ -13,14 +22,6 @@ export async function sendPaymentLink(transaction: Transaction, email: string) {
         message: 'Email sending is disabled. No email was sent.',
       };
     }
-
-    // Use the dynamic base URL based on is_sandbox
-    const paymentUrl = createPaymentUrl({
-      ...PAYFAST_CONFIG,
-    }, transaction, email);
-
-    // Log the payment URL regardless of the email sending flag
-    console.log('Payment URL:', paymentUrl);
 
     // Send the email if sending is enabled
     const response = await emailjs.send(
