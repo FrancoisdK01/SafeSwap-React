@@ -18,6 +18,8 @@ const Returns = lazy(() => import('./pages/Returns'));
 const Profile = lazy(() => import('./pages/Profile'));
 const Auth = lazy(() => import('./pages/Auth'));
 const PaymentSuccess = lazy(() => import('./pages/PaymentSuccess'));
+const PaymentCancel = lazy(() => import('./pages/PaymentCancel'));
+
 
 // ✅ Loading fallback component
 const Loading = () => <div>Loading...</div>;
@@ -50,6 +52,7 @@ export default function App() {
                     <Route path="returns" element={<Returns />} />
                     <Route path="profile" element={<Profile />} />
                     <Route path="payment/success" element={<PaymentSuccess />} />
+                    <Route path="payment/cancel" element={<PaymentCancel />} />
                   </Route>
                 </Routes>
               </Suspense>
