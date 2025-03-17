@@ -6,13 +6,20 @@ import { EMAILJS_CONFIG } from '../config/emailjs';
 
 export async function sendPaymentLink(transaction: Transaction, email: string) {
   try {
+    // Check if sending emails is disabled
+    if (!EMAILJS_CONFIG.SendMail) {
+      return {
+        success: true,
+        message: 'Email sending is disabled. No email was sent.',
+      };
+    }
+
     // Use the dynamic base URL based on is_sandbox
     const paymentUrl = createPaymentUrl({
       ...PAYFAST_CONFIG,
     }, transaction, email);
 
-    // console.log(paymentUrl);
-
+    // Send the email if sending is enabled
     const response = await emailjs.send(
       EMAILJS_CONFIG.serviceId,
       EMAILJS_CONFIG.templateId,
@@ -45,5 +52,4 @@ export async function sendPaymentLink(transaction: Transaction, email: string) {
       error: error instanceof Error ? error.message : 'Unknown error',
     };
   }
-  
 }
