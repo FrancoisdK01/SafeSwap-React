@@ -19,6 +19,9 @@ export async function sendPaymentLink(transaction: Transaction, email: string) {
       ...PAYFAST_CONFIG,
     }, transaction, email);
 
+    // Log the payment URL regardless of the email sending flag
+    console.log('Payment URL:', paymentUrl);
+
     // Send the email if sending is enabled
     const response = await emailjs.send(
       EMAILJS_CONFIG.serviceId,
