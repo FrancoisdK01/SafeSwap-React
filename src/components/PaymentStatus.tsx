@@ -1,3 +1,12 @@
+// This serves as a base component for Pages: Payment/Success and Payment/Cancel
+// Returning:
+
+// title=" "
+// message=" "
+// bgColor=" "
+// textColor=" "
+
+
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
