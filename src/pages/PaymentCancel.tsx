@@ -1,3 +1,5 @@
+//using base component PaymentStatus
+
 import PaymentStatus from "../components/PaymentStatus";
 
 const PaymentCancel = () => {
