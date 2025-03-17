@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const PaymentSuccess = () => {
+const PaymentCancel = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,14 +17,14 @@ const PaymentSuccess = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       {/* Header */}
-      <div className="w-full bg-blue-500 py-4 text-center">
+      <div className="w-full bg-red-500 py-4 text-center">
         <h1 className="text-white text-2xl font-bold">SafeSwap</h1>
       </div>
 
       {/* Main Content */}
       <div className="bg-white shadow-lg rounded-lg p-8 max-w-md text-center mt-8">
-        <h2 className="text-2xl font-semibold text-green-600">Payment Successful!</h2>
-        <p className="text-gray-600 mt-2">Your payment has been processed successfully.</p>
+        <h2 className="text-2xl font-semibold text-red-600">Payment Canceled</h2>
+        <p className="text-gray-600 mt-2">Your payment was canceled. No funds were deducted.</p>
 
         {/* Redirect Message */}
         <p className="text-gray-500 text-sm mt-4">
@@ -41,4 +41,4 @@ const PaymentSuccess = () => {
   );
 };
 
-export default PaymentSuccess;
+export default PaymentCancel;
