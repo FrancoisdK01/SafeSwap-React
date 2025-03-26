@@ -23,7 +23,7 @@ const PaymentStatus: React.FC<PaymentStatusProps> = ({ title, message, bgColor, 
   useEffect(() => {
     const timer = setTimeout(() => {
       navigate("/transactions");
-    }, 6000);
+    }, 4500);
     return () => clearTimeout(timer);
   }, [navigate]);
 
