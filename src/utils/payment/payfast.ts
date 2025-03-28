@@ -21,10 +21,10 @@ const PUBLIC_BASE_URL = 'https://celebrated-pixie-6a4543.netlify.app';
 const IS_LOCAL = import.meta.env.VITE_IS_LOCAL === 'true'; // Convert string to boolean
 
 // Log the environment variables
-// console.log('PAYFAST_MERCHANT_ID:', import.meta.env.PAYFAST_MERCHANT_ID);
-// console.log('PAYFAST_MERCHANT_KEY:', import.meta.env.PAYFAST_MERCHANT_KEY);
-// console.log('PAYFAST_PASSPHRASE:', import.meta.env.PAYFAST_PASSPHRASE);
-// console.log('PAYFAST_IS_SANDBOX:', import.meta.env.PAYFAST_IS_SANDBOX);
+console.log('PAYFAST_MERCHANT_ID:', import.meta.env.VITE_PAYFAST_MERCHANT_ID);
+console.log('PAYFAST_MERCHANT_KEY:', import.meta.env.VITE_PAYFAST_MERCHANT_KEY);
+console.log('PAYFAST_PASSPHRASE:', import.meta.env.VITE_PAYFAST_PASSPHRASE);
+console.log('PAYFAST_IS_SANDBOX:', import.meta.env.VITE_PAYFAST_IS_SANDBOX);
 
 export const PAYFAST_CONFIG: PayFastConfig = {
   merchant_id: import.meta.env.VITE_PAYFAST_MERCHANT_ID,
