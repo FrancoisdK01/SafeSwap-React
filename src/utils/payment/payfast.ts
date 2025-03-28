@@ -21,14 +21,16 @@ const PUBLIC_BASE_URL = 'https://celebrated-pixie-6a4543.netlify.app';
 const IS_LOCAL = import.meta.env.VITE_IS_LOCAL === 'true'; // Convert string to boolean
 
 export const PAYFAST_CONFIG: PayFastConfig = {
-  merchant_id: '10036981',
-  merchant_key: 'wnhgjl9qn8d5i',
-  passphrase: 'SafeSwapSaltPhrase102',
+  merchant_id: import.meta.env.PAYFAST_MERCHANT_ID,
+  merchant_key: import.meta.env.PAYFAST_MERCHANT_KEY,
+  passphrase: import.meta.env.PAYFAST_PASSPHRASE,
+  is_sandbox: import.meta.env.VITE_PAYFAST_IS_SANDBOX === 'true',
+  
   production_url: 'https://www.payfast.co.za/eng/process',
   sandbox_url: 'https://sandbox.payfast.co.za/eng/process',
   return_url: `${IS_LOCAL ? LOCAL_BASE_URL : PUBLIC_BASE_URL}/payment/success`,
   cancel_url: `${IS_LOCAL ? LOCAL_BASE_URL : PUBLIC_BASE_URL}/payment/cancel`,
   notify_url: `${IS_LOCAL ? LOCAL_BASE_URL : PUBLIC_BASE_URL}/.netlify/functions/paymentNotify`,
-  is_sandbox: true,
-  is_local: IS_LOCAL, // ✅ Now correctly evaluates as boolean
+  
+  is_local: IS_LOCAL,
 };
