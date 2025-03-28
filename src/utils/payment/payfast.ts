@@ -20,17 +20,23 @@ const PUBLIC_BASE_URL = 'https://celebrated-pixie-6a4543.netlify.app';
 
 const IS_LOCAL = import.meta.env.VITE_IS_LOCAL === 'true'; // Convert string to boolean
 
+// Log the environment variables
+console.log('PAYFAST_MERCHANT_ID:', import.meta.env.PAYFAST_MERCHANT_ID);
+console.log('PAYFAST_MERCHANT_KEY:', import.meta.env.PAYFAST_MERCHANT_KEY);
+console.log('PAYFAST_PASSPHRASE:', import.meta.env.PAYFAST_PASSPHRASE);
+console.log('PAYFAST_IS_SANDBOX:', import.meta.env.PAYFAST_IS_SANDBOX);
+
 export const PAYFAST_CONFIG: PayFastConfig = {
   merchant_id: import.meta.env.PAYFAST_MERCHANT_ID,
   merchant_key: import.meta.env.PAYFAST_MERCHANT_KEY,
   passphrase: import.meta.env.PAYFAST_PASSPHRASE,
-  is_sandbox: import.meta.env.VITE_PAYFAST_IS_SANDBOX === 'true',
-  
+  is_sandbox: import.meta.env.PAYFAST_IS_SANDBOX === 'true',
+
   production_url: 'https://www.payfast.co.za/eng/process',
   sandbox_url: 'https://sandbox.payfast.co.za/eng/process',
   return_url: `${IS_LOCAL ? LOCAL_BASE_URL : PUBLIC_BASE_URL}/payment/success`,
   cancel_url: `${IS_LOCAL ? LOCAL_BASE_URL : PUBLIC_BASE_URL}/payment/cancel`,
   notify_url: `${IS_LOCAL ? LOCAL_BASE_URL : PUBLIC_BASE_URL}/.netlify/functions/paymentNotify`,
-  
+
   is_local: IS_LOCAL,
 };
